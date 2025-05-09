@@ -1,0 +1,46 @@
+# Combat Log By Death1Clown!
+#
+#				|--------------------------------------|
+#				|	                    	  		|
+#				|	      Combat Log Skript!	      |
+#				|	    By Youtuber Death1Clown	   |
+#				|   https://youtube.com/@Death1Clown   |
+#				|							  		|
+#				|--------------------------------------|
+#
+#
+
+on damage:
+  attacker is player
+  victim is player
+  
+  combat(victim)
+  combat(attacker)
+
+function comabt(p: player):
+
+  if {combat.%{_p}%} is false:
+
+    set {combatcooldown.%{_p}%} to 16
+    set {combat.%{_p}%} to true
+    while {combatcooldown.%{_p}%} is not 0:
+
+      remove 1 from {combatcooldown%{_p}%}
+      send actionbar "&cYou are in combat &8| &c%{combatcooldown%player%}% second remaining" to {_p}
+      
+      if {combatcooldown.%{_p}%} is 0:
+        set {combat.%{_p}%} to false
+        
+      wait 1 second
+  else:
+    set {combatcooldown.%{_p}%} to 16
+
+on quit:
+  if {combat.%player%} is true:
+    kill player
+    set {combat.%player%} to false
+    set {combatcooldown.%player%} to 0
+
+on death:
+  set {combat.%victim%} to false
+  set {combatcooldown.%victim%} to 0
